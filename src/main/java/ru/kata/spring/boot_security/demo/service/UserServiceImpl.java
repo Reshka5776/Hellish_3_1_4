@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     private final RoleService roleService;
     private final ApplicationContext context;
 
-    @Autowired
+
     public UserServiceImpl(UserDao userDao, RoleService roleService, ApplicationContext context) {
         this.userDao = userDao;
         this.roleService = roleService;
@@ -69,9 +69,10 @@ public class UserServiceImpl implements UserService {
     public User findByUsername(String email) {
         return userDao.getUserByEmail(email);
     }
-
+    @Transactional
     @Override
     public User setRolesToUser(User user) {
+
         Set<Role> setRoles = new HashSet<>();
         Set<Role> usersRole = new HashSet<>(user.getRoles());
         user.setRoles(null);

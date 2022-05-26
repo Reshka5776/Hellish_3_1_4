@@ -16,7 +16,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> getUsers() {
-        return entityManager.createQuery("select u from User u", User.class).getResultList();
+        return entityManager.createQuery("select distinct u from User u join fetch u.roles order by u.id" , User.class).getResultList();
     }
     public User getUserById(long id) {
         return entityManager.find(User.class, id);
@@ -35,7 +35,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     public User getUserByEmail(String email) {
-         return entityManager.createQuery("SELECT u FROM User u WHERE u.email = ?1", User.class)
+         return entityManager.createQuery("SELECT  u FROM User u join fetch u.roles WHERE u.email = ?1", User.class)
                  .setParameter(1, email)
                  .getSingleResult();
     }

@@ -35,6 +35,6 @@ public class RoleDaoImpl implements RoleDao {
     }
     @Override
     public Set<Role> getRoles() {
-        return entityManager.createQuery("select role from Role role", Role.class).getResultStream().collect(Collectors.toSet());
+        return entityManager.createQuery("select role from Role role join fetch role.users", Role.class).getResultStream().collect(Collectors.toSet());
     }
 }

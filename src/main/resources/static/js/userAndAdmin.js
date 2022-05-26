@@ -59,7 +59,7 @@ async function getNavbarInfo() {
                 }
 
             $('#iddqd')
-                .append(`${data.email} with roles: ${s}`)
+                .append(`<strong>${data.email} with roles: ${s}</strong>`)
 
             if(s.includes("ROLE_ADMIN")){
                 $(async function() {
@@ -89,7 +89,7 @@ async function getAllRolesListForAll() {
 
 
 
-//юзер пилл
+//----------------------------------------ТАБЛИЦА С ИНФОЙ О ЗАЛОГИНЕНОМ ЮЗЕРЕ------------------------------------------
 async function getLoggedUserTable(user) {
     let tableLogged = $('#loggedUserTable tbody');
     tableLogged.empty();
@@ -116,6 +116,7 @@ async function getLoggedUserTable(user) {
                     tableLogged.append(tableLoggedContent);
 }
 
+//----------------------ТАБЛИЦА СО СПИСКОМ ВСЕХ ЮЗЕРОВ-----------------------
 
 async function getAllUserTable() {
     let tableAllUsers = $('#allUsersTable tbody');
@@ -164,19 +165,13 @@ async function getAllUserTable() {
     })
 }
 
+
+//--------------------------------------ДОБАВЛЕНИЕ НОВОГО ПОЛЬЗОВАТЕЛЯ--------------------------------------
 async function getAddNewUserForm() {
     let form = $(`#newUserForm`)
     form.show();
-        let targetForm = $('#newUserRoleBox');
-        let optionLine = `<select class="form-control" name="userRoles" id="roleSelectBox" multiple size="${allRoles.length}">`;
-        allRoles.forEach(role => {
-            optionLine = optionLine + `<option value="${role.name}">${role.name}</option>`;
-            console.log("role:" + role)
-            console.log("role id:" + role.id)
-            console.log("role name:" + role.name)
-        })
-        optionLine = optionLine + `</select>`
-        targetForm.append(optionLine);
+
+
 
 
     $('#addUserToDBButt').click(async () =>  {
@@ -186,7 +181,12 @@ async function getAddNewUserForm() {
         let age = newUserDBForm.find('#add-age').val();
         let email = newUserDBForm.find('#add-email').val();
         let password = newUserDBForm.find('#add-password').val();
-        let roles = newUserDBForm.find('#roleSelectBox').val();
+        // let roles = newUserDBForm.find('#roleSelectBox').val();
+        let s = []
+        let ids = Array.from(document.getElementById("newRole").options).filter(option=> option.selected).map(option=>option.value)
+        for (let i = 0; i<ids.length; i++) {
+            s.push({id : ids[i]})
+        }
 
         let data = {
             firstName: firstName,
@@ -194,7 +194,7 @@ async function getAddNewUserForm() {
             age: age,
             email: email,
             password: password,
-            roles: roles
+            roles: s
         }
         const response = await fetchingService.saveUserToDB(data);
         if (response.ok) {
@@ -204,7 +204,7 @@ async function getAddNewUserForm() {
             newUserDBForm.find('#add-age').val('');
             newUserDBForm.find('#add-email').val('');
             newUserDBForm.find('#add-password').val('');
-            newUserDBForm.find('#roleSelectBox').val('');
+            //newUserDBForm.find('#roleSelectBox').val('');
             $('#nav-home-tab').tab('show')
         }
 
@@ -212,7 +212,7 @@ async function getAddNewUserForm() {
 }
 
 
-// модальное окно - откр
+//--------------ОТКРЫТИЕ МОДАЛЬНОГО ОКНА-----------------------
 async function getBothFunctionsModal() {
     console.log('bothfunc')
     $('#bothModalsInOne').modal({
@@ -239,7 +239,7 @@ async function getBothFunctionsModal() {
     })
 }
 
-// Эдит форм инсерт
+//-----------------РЕДАКТИРОВАНИЕ ЮЗЕРА--------------------
 async function editUser(modal, id) {
     console.log("Window edit " + allRoles)
     let resp = await fetchingService.getSelectedUser(id);
@@ -256,33 +256,33 @@ async function editUser(modal, id) {
         let editUserFormContent = `
             <form class="form-group" id="editUser">
                 
-                        <div class="form-group">
-                            <label for="idEdit" class="col-form-label">User Id:</label>
+                        <div class="form-group text-center">
+                            <label for="idEdit" class="font-weight-bold">ID:</label>
                             <input type="text" readonly="readonly" class="form-control" id="idEdit" name="id" value="${user.id}">
                         </div>
-                        <div class="form-group">
-                            <label for="usernameEdit" class="col-form-label">First Name</label>
+                        <div class="form-group text-center">
+                            <label for="usernameEdit" class="font-weight-bold">First Name</label>
                             <input type="text" class="form-control" id="usernameEdit" required name="firstName" value="${user.firstName}">
                         </div>
-                        <div class="form-group">
-                            <label for="surnameEdit" class="col-form-label">Last Name</label>
+                        <div class="form-group text-center">
+                            <label for="surnameEdit" class="font-weight-bold">Last Name</label>
                             <input type="text" class="form-control" id="surnameEdit" required name="lastName" value="${user.lastName}">
                         </div>
-                        <div class="form-group">
-                            <label for="ageEdit" class="col-form-label">Age</label>
-                            <input type="text" class="form-control" id="ageEdit" required name="age" value="${user.age}">
+                        <div class="form-group text-center">
+                            <label for="ageEdit" class="font-weight-bold">Age</label>
+                            <input type="number" class="form-control" id="ageEdit" required name="age" value="${user.age}">
                         </div>
-                        <div class="form-group">
-                            <label for="emailEdit" class="col-form-label">Email</label>
+                        <div class="form-group text-center">
+                            <label for="emailEdit" class="font-weight-bold">Email</label>
                             <input type="text" class="form-control" id="emailEdit" required name="email" value="${user.email}">
                         </div>
-                        <div class="form-group">
-                            <label for="passwordEdit" class="col-form-label">Password</label>
+                        <div class="form-group text-center">
+                            <label for="passwordEdit" class="font-weight-bold">Password</label>
                             <input type="text" class="form-control" id="passwordEdit" name="password" value="">
                         </div>
                         
-                        <div class="form-group">
-                            <label for="roleBoxEdit" class="col-form-label">Role </label>
+                        <div class="form-group text-center">
+                            <label for="roleBoxEdit" class="font-weight-bold" multiple size = 2>Role </label>
                             <div id="roleBoxEdit"></div>
                         </div>
             </form>
@@ -327,7 +327,7 @@ async function editUser(modal, id) {
     })
 }
 
-// делит форм инсерт
+// -----------------------------------------------УДАЛЕНИЕ ЮЗЕРА----------------------------------------------
 async function deleteUser(modal, id) {
     console.log('delete modal')
     let resp = await fetchingService.getSelectedUser(id);
@@ -343,28 +343,28 @@ async function deleteUser(modal, id) {
     user.then(user => {
         let deleteUserFormContent = `
             <form class="form-group" id="editUser">
-                        <div class="form-group">
-                            <label for="idEdit" class="col-form-label">ID</label>
+                        <div class="form-group text-center">
+                            <label for="idEdit" class="center-block">ID</label>
                             <input type="text" readonly="readonly" class="form-control" id="idEdit" name="id" value="${user.id}">
                         </div>
-                        <div class="form-group">
-                            <label for="usernameEdit" class="col-form-label">First Name</label>
+                        <div class="form-group text-center">
+                            <label for="usernameEdit" class="center-block">First Name</label>
                             <input type="text" readonly="readonly" class="form-control" id="usernameEdit" required name="firstName" value="${user.firstName}">
                         </div>
-                        <div class="form-group">
-                            <label for="surnameEdit" class="col-form-label">Last Name</label>
+                        <div class="form-group text-center">
+                            <label for="surnameEdit" class="center-block">Last Name</label>
                             <input type="text" readonly="readonly" class="form-control" id="surnameEdit" required name="lastName" value="${user.lastName}">
                         </div>
-                        <div class="form-group">
-                            <label for="ageEdit" class="col-form-label">Age</label>
-                            <input type="text" readonly="readonly" class="form-control" id="ageEdit" required name="age" value="${user.age}">
+                        <div class="form-group text-center">
+                            <label for="ageEdit" class="center-block">Age</label>
+                            <input type="number" readonly="readonly" class="form-control" id="ageEdit" required name="age" value="${user.age}">
                         </div>
-                        <div class="form-group">
-                            <label for="emailEdit" class="col-form-label">Email</label>
-                            <input type="text" readonly="readonly" class="form-control" id="emailEdit" required name="email" value="${user.email}">
+                        <div class="form-group text-center">
+                            <label for="emailEdit" class="center-block">Email</label>
+                            <input type="email" readonly="readonly" class="form-control" id="emailEdit" required name="email" value="${user.email}">
                         </div>
-                        <div class="form-group" >
-                            <label for="roleBoxDelete" class="col-form-label">Roles</label>
+                        <div class="form-group text-center" >
+                            <label for="roleBoxDelete" class="center-block">Roles</label>
                             <div id="roleBoxDelete" readonly="readonly" ></div>
                         </div>
             </form>

@@ -43,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .successHandler(successUserHandler)
-                .loginProcessingUrl("/hellologin")
+                .loginProcessingUrl("/")
                 .and()
                 .csrf().disable()
                 .logout()

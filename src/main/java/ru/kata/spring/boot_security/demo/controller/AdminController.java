@@ -18,29 +18,21 @@ import java.util.Set;
 @Secured("ROLE_ADMIN")
 @RestController("/api")
 public class AdminController {
-    private UserDetailsServiceImp userDetailsServiceImp;
-    private UserService userService;
-    private RoleService roleService;
+    private final UserDetailsServiceImp userDetailsServiceImp;
+    private final UserService userService;
+    private final RoleService roleService;
 
-    @Autowired
-    public void setUserService(UserService userService) {
+    public AdminController(UserDetailsServiceImp userDetailsServiceImp, UserService userService, RoleService roleService) {
+        this.userDetailsServiceImp = userDetailsServiceImp;
         this.userService = userService;
-    }
-
-    @Autowired
-    public void setRoleService(RoleService roleService) {
         this.roleService = roleService;
     }
 
-    @Autowired
-    public void setUserDetailsServiceImp(UserDetailsServiceImp userDetailsServiceImp) {
-        this.userDetailsServiceImp = userDetailsServiceImp;
-    }
 
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("/admin/loggedUser")
     public ResponseEntity<User> getLoggedUser(Principal principal) {
-        User loggedUser = userDetailsServiceImp.findByUsername(principal.getName());
+        User loggedUser = userService.findByUsername(principal.getName());
         return ResponseEntity.ok(loggedUser);
     }
 
@@ -59,16 +51,15 @@ public class AdminController {
     }
 
     @GetMapping("admin/users/{id}")
-    public ResponseEntity<User> getSelectedUser(@PathVariable("id") long id, Principal principal) {
+    public ResponseEntity<User> getSelectedUser(@PathVariable("id") long id) {
         User user = userService.getUserById(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping("/admin/users")
-    public ResponseEntity<?> createUser(@RequestBody User user) {
-        User updatedUser = userService.setRolesToUser(user);
-        userService.addUser(updatedUser);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        userService.addUser(user);
+        return ResponseEntity.ok().body(user);
     }
 
     @PatchMapping("admin/users/{id}")
