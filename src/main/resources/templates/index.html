@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>login</title>
+</head>
+<body>
+
+
+<div class="jumbotron">
+    <h1 class="display-3">Welcome!</h1>
+
+    <hr class="my-2">
+    <p>Please, login.</p>
+    <p class="lead">
+        <a class="btn btn-primary btn-lg" th:href="@{/user}" role="button">User's page</a>
+        <a class="btn btn-primary btn-lg" th:href="@{/admin}" role="button">Admin panel</a>
+    </p>
+</div>
+
+<!--<a th:href="@{/user}">Admins & Users only</a>-->
+<!--<hr/>-->
+<!--<a th:href="@{/admin}">Admins only</a>-->
+<!--<hr/>-->
+
+</body>
+</html>
