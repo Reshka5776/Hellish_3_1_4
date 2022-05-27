@@ -55,7 +55,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void editUser(User updatedUser) {
-        setEncryptedPassword(updatedUser);
+        if (!updatedUser.getPassword().equals(userDao.getUserById(updatedUser.getId()).getPassword())) {
+            setEncryptedPassword(updatedUser);
+        }
+        //setEncryptedPassword(updatedUser);
         userDao.editUser(updatedUser);
     }
 

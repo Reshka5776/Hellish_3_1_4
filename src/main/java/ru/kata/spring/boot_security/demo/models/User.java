@@ -29,7 +29,6 @@ public class User implements UserDetails {
 
     @Column(name = "password")
     private String password;
-//(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 
     @ManyToMany
     @JoinTable(name = "users_roles",

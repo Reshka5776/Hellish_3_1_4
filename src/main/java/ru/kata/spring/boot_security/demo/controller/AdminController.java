@@ -63,8 +63,7 @@ public class AdminController {
     }
 
     @PatchMapping("admin/users/{id}")
-    public ResponseEntity<?> updateUser(@RequestBody User user,
-                                        @PathVariable("id") long id) {
+    public ResponseEntity<?> updateUser(@RequestBody User user) {
         User updatedUser = userService.setRolesToUser(user);
         userService.editUser(updatedUser);
         return new ResponseEntity<>(HttpStatus.OK);

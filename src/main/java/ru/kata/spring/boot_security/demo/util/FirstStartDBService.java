@@ -40,8 +40,8 @@ public class FirstStartDBService implements CommandLineRunner {
         roleUserAdmin.add(role1);
         roleUserAdmin.add(role2);
 
-        User user1 = new User("admin", "I'm", 20, "admin1@mail.ru", "admin", roleAdmin);
-        User user2 = new User("user", "Very", 23, "user1@mail.ru", "user", roleUser);
+        User user1 = new User("admin", "I'm", 20, "admin@mail.ru", "admin", roleAdmin);
+        User user2 = new User("user", "Very", 23, "user@mail.ru", "user", roleUser);
         User user3 = new User("monster", "Tired", 30, "monster@mail.ru", "monster", roleUserAdmin);
 
         userService.addUser(user1);

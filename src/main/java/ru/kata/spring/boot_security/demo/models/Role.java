@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ public class Role implements GrantedAuthority {
     private String name;
     @JsonIgnore
     @ManyToMany(mappedBy = "roles")
+
 //    @JoinTable(name = "users_roles",
 //            joinColumns = @JoinColumn(name = "role_id"),
 //            inverseJoinColumns = @JoinColumn(name = "user_id"))

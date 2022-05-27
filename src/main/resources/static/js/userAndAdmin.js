@@ -278,11 +278,11 @@ async function editUser(modal, id) {
                         </div>
                         <div class="form-group text-center">
                             <label for="passwordEdit" class="font-weight-bold">Password</label>
-                            <input type="text" class="form-control" id="passwordEdit" name="password" value="">
+                            <input type="text" class="form-control" id="passwordEdit" name="password" value="${user.password}">
                         </div>
                         
                         <div class="form-group text-center">
-                            <label for="roleBoxEdit" class="font-weight-bold" multiple size = 2>Role </label>
+                            <label for="roleBoxEdit" class="font-weight-bold" multiple size=2>Role </label>
                             <div id="roleBoxEdit"></div>
                         </div>
             </form>
@@ -290,7 +290,7 @@ async function editUser(modal, id) {
 
         modal.find('.modal-body').append(editUserFormContent);
             let targetForm = $('#roleBoxEdit');
-            let optionLine = `<select class="form-control" name="userRoles" id="roleSelectBoxEdit" multiple size="${allRoles}">`;
+            let optionLine = `<select class="form-control" name="userRoles" id="roleSelectBoxEdit" multiple size=2>`;
             allRoles.forEach(role => {
                 optionLine = optionLine + `<option value="${role.name}">${role.name}</option>`;
             })
